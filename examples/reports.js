@@ -82,7 +82,7 @@ bot.on('callbackQuery', msg => {
         ]);
 
         bot.editMessageReplyMarkup({chatId, messageId}, {replyMarkup});
-        response = msg.message.text + "\n\nEl procedimiento fue APROBADO";
+        response = msg.message.text + "\n\nEl procedimiento fue APROBADO por " + msg.from.first_name + " " + msg.from.last_name;
     } else if(resp == 'rejected') {
                 const replyMarkup = bot.inlineKeyboard([
             [
