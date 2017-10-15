@@ -131,6 +131,27 @@ bot.on('/lista', msg => {
     })
 })
 
+bot.on('/geo', msg => {
+        let tomo = msg.text.replace("/geo ", "").trim();
+
+        DATA.findMV(tomo, (err, data) => {
+        if(err) {
+            bot.sendMessage(msg.from.id, "Ups. Ocurrió un error inesperado");
+        } else {
+            if(data.length == 0) {
+                bot.sendMessage(msg.from.id, "El centro que reporta no existe");
+            } else {
+                let centro = data[0];
+                let resMsg = centro.DES_ESTADO + "\n" + centro.DES_MUNICIPIO + "\n" + centro.DES_PARROQUIA + "\n" +
+                centro.CODIGO + " " + centro.NOMBRE + "\n" +
+                "MESA " + tomo.substr(10,2);
+
+                return bot.sendMessage(msg.from.id, resMsg);
+            }
+        }
+    });
+})
+
 bot.on('/p_cero', msg => {
     DATA.pCero();
     registeredGrps = [];
