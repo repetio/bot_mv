@@ -82,6 +82,7 @@ bot.on('callbackQuery', msg => {
         ]);
 
         bot.editMessageReplyMarkup({chatId, messageId}, {replyMarkup});
+        DATA.addMV(tomo, current());
         response = msg.message.text + "\n\nEl procedimiento fue APROBADO por " + msg.from.first_name + " " + msg.from.last_name;
     } else if(resp == 'rejected') {
                 const replyMarkup = bot.inlineKeyboard([
@@ -115,6 +116,21 @@ bot.on('/aprobador', msg => {
     bot.sendMessage(msg.from.id, `Se ha registrado a ${msg.from.first_name} como aprobador`); 
 })
 
+bot.on('/lista', msg => {
+    console.log("show lista");
+    DATA.getMVs((err, data) => {
+        if(err) {
+            return bot.sendMessage(msg.from.id, `Ups ocurrio un error`); 
+        } else {
+            var t = "";
+            data.forEach((tomo) => {
+                t = t + tomo.code + "\t" + tomo.time + "\n";
+            })
+            return bot.sendMessage(msg.chat.id, t); 
+        }
+    })
+})
+
 bot.on('/p_cero', msg => {
     DATA.pCero();
     registeredGrps = [];
@@ -134,6 +150,11 @@ DATA.getAprovers((err, data) => {
         aprovers.push(val.id);
     })
 })
+
+var current = () => {
+    var h = new Date();
+    return `${h.getDate()}/${h.getMonth()}/${h.getFullYear()} ${h.getHours()}:${h.getMinutes()}`
+}
 
 
 bot.start();

@@ -39,9 +39,23 @@ DATA.getAprovers = (callback) => {
 	});
 }
 
+DATA.addMV = (code, time) => {
+	let apr = db.prepare("insert into mvs values (?, ?)");
+	apr.run(code, time);
+	apr.finalize();
+}
+
+DATA.getMVs = (callback) => {
+	let qry = "select * from mvs;";
+	db.all(qry, (err, rows) => {
+		callback(err, rows);
+	});
+}
+
 DATA.pCero = () => {
 	db.run("delete from groups;");
 	db.run("delete from aprovers");
+	db.run("delete from mvs");
 }
 
 module.exports = DATA;
