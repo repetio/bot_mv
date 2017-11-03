@@ -174,7 +174,7 @@ DATA.getAprovers((err, data) => {
 
 var current = () => {
     var h = new Date();
-    return `${h.getDate()}/${h.getMonth()}/${h.getFullYear()} ${h.getHours()}:${h.getMinutes()}`
+    return `${h.getDate()}/${h.getMonth() + 1}/${h.getFullYear()} ${h.getHours() - 4}:${h.getMinutes()}`
 }
 
 
